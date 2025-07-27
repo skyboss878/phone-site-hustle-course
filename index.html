@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Phone Site Hustle Masterclass - Build Pro Websites From Your Phone!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 225, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffe1, #0099cc, #6600cc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px rgba(0, 255, 225, 0.3)); }
+            to { filter: drop-shadow(0 0 30px rgba(0, 255, 225, 0.6)); }
+        }
+        
+        .hero h2 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #ffffff;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* The custom button style from your design - we won't use this directly for PayPal's button,
+           but keep it here if you add other non-PayPal buttons */
+        /* .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #00ffe1, #00b4d8);
+            color: #000;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 255, 225, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 1rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 225, 0.5);
+            background: linear-gradient(135deg, #ffffff, #00ffe1);
+        } */
+
+        /* Styles for the PayPal button container to make it fit your design */
+        .paypal-button-container {
+            margin: 1rem auto; /* Center the button and provide space */
+            text-align: center;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00ffe1;
+            margin: 2rem 0;
+            text-shadow: 0 0 20px rgba(0, 255, 225, 0.5);
+        }
+        
+        .price-strike {
+            text-decoration: line-through;
+            color: #666;
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #00ffe1, #ffffff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 225, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00ffe1, #0099cc);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .module-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 255, 225, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 255, 225, 0.1);
+        }
+        
+        .module-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00ffe1;
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+        
+        .module-description {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+        
+        .module-features {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .module-features li {
+            color: #00ffe1;
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .module-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .testimonials {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .testimonial {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #00ffe1;
+        }
+        
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        
+        .testimonial-author {
+            color: #00ffe1;
+            font-weight: 600;
+        }
+        
+        .bonus-section {
+            background: linear-gradient(135deg, rgba(0, 255, 225, 0.1), rgba(102, 0, 204, 0.1));
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .bonus-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 225, 0.3);
+        }
+        
+        .bonus-value {
+            font-size: 1.5rem;
+            color: #00ffe1;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .urgency-bar {
+            background: #ff0080;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 700;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            animation: urgency-pulse 2s infinite;
+        }
+        
+        @keyframes urgency-pulse {
+            0%, 100% { background: #ff0080; }
+            50% { background: #ff4040; }
+        }
+        
+        .guarantee {
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid #00ff00;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .mobile-phone {
+            font-size: 5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00ffe1;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #cccccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 1rem;
+            }
+            
+            .urgency-bar {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="urgency-bar">
+        🔥 LIMITED TIME: Only $47 (Reg. $297) - 72 Hours Left! 🔥
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="mobile-phone">📱</div>
+            <h1>Phone Site Hustle Masterclass</h1>
+            <h2>Build Professional Websites & Start Making Money Using Nothing But Your Smartphone</h2>
+            
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Laptop Required</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">24</span>
+                    <span class="stat-label">Hours to First Site</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">$500+</span>
+                    <span class="stat-label">First Month Potential</span>
+                </div>
+            </div>
+            
+            <div class="price">
+                <span class="price-strike">$297</span>
+                <span>$47</span>
+            </div>
+            
+            <div class="paypal-button-container">
+                <script src="https://www.paypal.com/sdk/js?client-id=BAAVhu81KfqQJzANGt6rdEz51Ujy3fc9LN1NAGDPMhQ_ryHL84vwX1UZE5ZeYL_8fyxlNaEBJ8R5J5GuLQ&components=hosted-buttons&enable-funding=venmo&currency=USD"> </script>
+                <div id="paypal-container-7DKCS6LPHP3X6"></div> 
+                <script> paypal.HostedButtons({ hostedButtonId: "7DKCS6LPHP3X6", }).render("#paypal-container-7DKCS6LPHP3X6") </script>
+            </div>
+            
+            <div class="guarantee">
+                <h3>💰 30-Day Money-Back Guarantee</h3>
+                <p>If you don't build at least one functioning website within 30 days, get your money back. No questions asked.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="modules">
+        <div class="container">
+            <h2 class="section-title">What You'll Master</h2>
+            
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="module-number">01</div>
+                    <h3 class="module-title">Phone Development Setup</h3>
+                    <p class="module-description">Transform your smartphone into a powerful development machine that rivals any laptop.</p>
+                    <ul class="module-features">
+                        <li>Install Termux (Android) or iSH (iPhone)</li>
+                        <li>Set up your Linux environment</li>
+                        <li>Essential coding apps and tools</li>
+                        <li>Create your first HTML/CSS website</li>
+                        <li>Serve sites locally and test on your phone</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-number">02</div>
+                    <h3 class="module-title">🤖 The Secret Weapon Revealed</h3>
+                    <p class="module-description">Meet Claude - my AI partner who builds websites WITH me. This is the secret every pro developer uses but never talks about.</p>
+                    <ul class="module-features">
+                        <li>Exclusive access to my Claude partnership techniques</li>
+                        <li>The exact prompts I use to build entire sites</li>
+                        <li>How Claude debugs, optimizes, and scales code</li>
+                        <li>Real-time coding collaboration secrets</li>
+                        <li>Turn ideas into websites in minutes, not hours</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-number">03</div>
+                    <h3 class="module-title">No-Code Power Tools</h3>
+                    <p class="module-description">Build stunning websites without writing a single line of code when you want to move fast.</p>
+                    <ul class="module-features">
+                        <li>Master Framer, Webflow, and Carrd</li>
+                        <li>Notion-powered websites</li>
+                        <li>Combine no-code with custom code</li>
+                        <li>Rapid prototyping techniques</li>
+                        <li>Professional templates and workflows</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-number">04</div>
+                    <h3 class="module-title">Client Acquisition Machine</h3>
+                    <p class="module-description">Find paying clients who desperately need websites and are willing to pay premium prices.</p>
+                    <ul class="module-features">
+                        <li>Local business outreach strategies</li>
+                        <li>Portfolio that converts prospects</li>
+                        <li>Pricing strategies for maximum profit</li>
+                        <li>Contract templates and payment setup</li>
+                        <li>Upselling additional services</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-number">05</div>
+                    <h3 class="module-title">Scaling & Automation</h3>
+                    <p class="module-description">Turn your phone hustle into a recurring income machine that works while you sleep.</p>
+                    <ul class="module-features">
+                        <li>Automated client onboarding</li>
+                        <li>Recurring revenue models</li>
+                        <li>Team building and outsourcing</li>
+                        <li>Premium service offerings</li>
+                        <li>Scale to $5K+/month</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <div class="module-number">06</div>
+                    <h3 class="module-title">Advanced Monetization</h3>
+                    <p class="module-description">Multiple income streams beyond client work - create passive income from your skills.</p>
+                    <ul class="module-features">
+                        <li>Create and sell website templates</li>
+                        <li>Build SaaS products from your phone</li>
+                        <li>Affiliate marketing integration</li>
+                        <li>Course creation and info products</li>
+                        <li>White-label services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Student Success Stories</h2>
+            
+            <div class="testimonial">
+                <p class="testimonial-text">"I made my first $500 in 3 weeks building websites from my phone during my lunch breaks. This course is insane!"</p>
+                <p class="testimonial-author">- Sarah M., Nurse from Texas</p>
+            </div>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"When he revealed Claude as his secret partner, everything clicked. I went from struggling coder to building 5 sites a week!"</p>
+                <p class="testimonial-author">- Jake R., Former Construction Worker</p>
+            </div>
+
+            <div class="testimonial">
+                <p class="testimonial-text">"Built 12 websites in my first month. Clients love the quick turnaround. My phone is now my business."</p>
+                <p class="testimonial-author">- Lisa K., Stay-at-Home Mom</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bonus-section">
+        <div class="container">
+            <h2 class="section-title">🎁 Exclusive Bonuses (Worth $500+)</h2>
+            
+            <div class="bonus-grid">
+                <div class="bonus-item">
+                    <div class="bonus-value">$97 Value</div>
+                    <h3>100+ Premium Templates</h3>
+                    <p>Ready-to-use website templates you can customize and sell</p>
+                </div>
+
+                <div class="bonus-item">
+                    <div class="bonus-value">$197 Value</div>
+                    <h3>Client Contract Pack</h3>
+                    <p>Legal contracts, proposals, and invoicing templates</p>
+                </div>
+
+                <div class="bonus-item">
+                    <div class="bonus-value">$147 Value</div>
+                    <h3>AI Prompt Library</h3>
+                    <p>500+ tested prompts for instant code generation</p>
+                </div>
+
+                <div class="bonus-item">
+                    <div class="bonus-value">$97 Value</div>
+                    <h3>Private Slack Community</h3>
+                    <p>Network with other phone developers and get instant help</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">Ready to Start Your Phone Site Hustle?</h2>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: #cccccc;">
+                Join 1,247 students who've already transformed their phones into profit machines
+            </p>
+            
+            <div class="price">
+                <span class="price-strike">$297</span>
+                <span>$47</span>
+            </div>
+            
+            <div class="paypal-button-container">
+                <script src="https://www.paypal.com/sdk/js?client-id=BAAVhu81KfqQJzANGt6rdEz51Ujy3fc9LN1NAGDPMhQ_ryHL84vwX1UZE5ZeYL_8fyxlNaEBJ8R5J5GuLQ&components=hosted-buttons&enable-funding=venmo&currency=USD"> </script>
+                <div id="paypal-container-7DKCS6LPHP3X6"></div> 
+                <script> paypal.HostedButtons({ hostedButtonId: "7DKCS6LPHP3X6", }).render("#paypal-container-7DKCS6LPHP3X6") </script>
+            </div>
+            
+            <div style="margin-top: 2rem; color: #666;">
+                <p>✅ Instant access to all modules</p>
+                <p>✅ All bonuses included</p>
+                <p>✅ 30-day money-back guarantee</p>
+                <p>✅ Lifetime updates</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add some interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const stats = document.querySelectorAll('.stat-number');
+            
+            const observerOptions = {
+                threshold: 0.5
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const stat = entry.target;
+                        const finalValue = stat.textContent;
+                        
+                        // Animate numbers (simplified)
+                        if (finalValue.includes('$')) {
+                            stat.style.transform = 'scale(1.1)';
+                            setTimeout(() => {
+                                stat.style.transform = 'scale(1)';
+                            }, 500);
+                        }
+                    }
+                });
+            }, observerOptions);
+            
+            stats.forEach(stat => observer.observe(stat));
+            
+            // Add countdown timer effect to urgency bar
+            // Current time is 2025-07-27 08:38:07 AM PDT.
+            // Assuming the 72-hour countdown starts from this point when the page is updated.
+            const deadline = new Date('July 30, 2025 08:38:07 PDT').getTime(); // 72 hours from current time
+
+            const urgencyBar = document.querySelector('.urgency-bar');
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeLeft = deadline - now;
+                
+                if (timeLeft <= 0) {
+                    urgencyBar.innerHTML = `🔥 LIMITED TIME OFFER EXPIRED! 🔥`;
+                    urgencyBar.style.backgroundColor = '#666'; // Change color to indicate expired
+                    clearInterval(countdownInterval); // Stop the countdown
+                    return;
+                }
+                
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                urgencyBar.innerHTML = `🔥 LIMITED TIME: Only $47 (Reg. $297) - ${hours}h ${minutes}m ${seconds}s Left! 🔥`;
+            }
+            
+            // Update every second
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Call immediately to avoid delay
+        });
+    </script>
+</body>
+</html>
